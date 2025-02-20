@@ -4,20 +4,27 @@
     <meta charset="UTF-8">
     <title>Frontend System Design Fundamentals</title>
     <link rel="stylesheet" href="./index.css">
+    <template id = "card-template">
+      <article class="card">
+        <h3 class="card__title"></h3>
+        <div class="card__body">
+          <div class='card__body__image'></div>
+          <section class='card__body__content'>
+          </section>
+        </div>
+      </article>
+    </template> 
+    <!-- // stores html in the lightweight obeject in memory not queriable by DOM API SO 
+     external scripts can't access this content so not rendered -->
 </head>
 <body>
 <main id="container"></main>
 </body>
 <script>
     const container = document.getElementById('container');
-    const html = `<article class="card">
-    <h3 class="card__title"></h3>
-    <div class="card__body">
-      <div class='card__body__image'></div>
-      <section class='card__body__content'>
-      </section>
-    </div>
-  </article>`;
+    const template = document.getElementById('card_template') //cloned the template above so i can use DOM API now
+
+   
 
     /**
      * @param {string} title
@@ -26,7 +33,11 @@
      * @return {HTMLElement
      */
     function createCardComponent(title, body) {
-        // @todo - Implement function
+        const card = template.content.cloneNode(true).firstElementChild; //give me the article
+        const [cardTitle, cardBody] = card.querySelectorAll('.card__title, .card__body__content');
+        cardTitle.textContent = title;
+        cardBody.textContent = body;
+        return card;
     }
 
     const component = createCardComponent(
